@@ -13,11 +13,19 @@
             <img src="{{ $project->preview }}" class="card-img-top" alt="image">
             <div class="card-body">
               <h5 class="card-title fw-bold">{{ $project->title }}</h5>
+              @if ($project->type)
+              <p>
+                <strong>
+                  {{ $project->type->name }}
+                </strong>
+              </p>
+                  
+              @endif
               <p class="card-text">{{ $project->description }}</p>
               <p>Creato il {{ $project->creation_date }}</p>
               <div class="links d-flex gap-2">
                   <a href="{{ route('admin.projects.edit', $project ) }}" class="btn btn-secondary btn-sm">Edit</a>
-                  <form action="{{ route('admin.projects.destroy',$project)}}" method="project">
+                  <form action="{{ route('admin.projects.destroy',$project)}}" method="POST">
                     @csrf
                     @method('DELETE')
 

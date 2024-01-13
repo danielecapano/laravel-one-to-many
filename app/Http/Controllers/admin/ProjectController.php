@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -25,7 +26,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+
+        $types = Type::orderBy('name', 'ASC')->get();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -35,8 +38,9 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required|max:100|string|unique:projects',
-            'text' => 'nullable|min:5|string',
-            'preview' => 'required|max:300|string'
+            'description' => 'nullable|min:5|string',
+            'preview' => 'required|max:300|string',
+            'type_id' => 'nullable|exists:types,id'
         ]);
 
         $data = $request->all();
@@ -61,7 +65,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+
+        $types = Type::orderBy('name', 'ASC')->get();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -71,7 +77,7 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => ['required', 'max:100', 'string', Rule::unique('projects')->ignore($project->id)],
-            'text' => 'nullable|min:5|string',
+            'description' => 'nullable|min:5|string',
             'preview' => 'required|max:300|string'
         ]);
 

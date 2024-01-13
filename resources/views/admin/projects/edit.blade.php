@@ -26,6 +26,16 @@
             </div>
 
             <div class="mb-3">
+              <label for="category_id" class="form-label">Types</label>
+              <select name="type_id" class="form-control" id="type_id">
+                <option value="">Seleziona una tipologia</option>
+                @foreach($types as $type)
+                  <option @selected( old('type_id', optional($project->type)->id ) == $type->id ) value="{{ $type->id }}">{{ $type->name }}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="mb-3">
             <label for="preview" class="form-label fw-bold">Preview</label>
             <input type="text" class="form-control" name="preview" placeholder="Preview (URL)" value="{{ old('slug', $project->preview) }}">
             </div>
@@ -37,7 +47,7 @@
 
             <div class="mb-3">
             <label for="description" class="form-label fw-bold">Description</label>
-            <textarea class="form-control" rows="3">{{ old('description', $project->description) }}</textarea>
+            <textarea class="form-control" name="description" rows="3">{{ old('description', $project->description) }}</textarea>
             </div>
 
             <input type="submit" class="btn btn-warning btn-sm " value="Salva">

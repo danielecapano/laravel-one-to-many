@@ -17,9 +17,12 @@
                   <th>ID</th>
                   <th>Title</th>
                   <th>Slug</th>
+                  <th>Type</th>
                   <th>Date of Creation</th>
-                  <th></th>
-                  <th></th>
+                  
+                  <th><th>
+                    <a class="btn btn-primary btn-sm" href="{{ route('admin.projects.create') }}">Nuovo</a>
+                  </th></th>
                 </tr>
               </thead>
               <tbody>
@@ -32,6 +35,7 @@
                       </a>
                       </td>
                       <td>{{ $project->slug }}</td>
+                      <td>{{ optional($project->type)->name }}</td>
                       <td>{{ $project->creation_date }}</td>
                       <td>
                         <a href="{{ route('admin.projects.edit',$project) }}" class="btn btn-secondary btn-sm">Edit</a>
